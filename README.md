@@ -7,7 +7,7 @@ Draw UML diagrams using plain text scripts.
 This repository is configured for GitHub Codespaces.  The configuration files are in the ```.devcontainer``` folder and
 will ensure that the Plant UML extension and pre-requistites are installed when Codespaces is used.  Try it!
 
-The ```.devcontainer``` folder also contains a Dockerfile which will allow this repository to be used in VS Code desktop within a container.  You will most likely be asked in you wish to reopen in a container when you clone the repository, otherwise just select the option "Remote-Containers: Reopen in Container" from the Command Palette.
+The ```.devcontainer``` folder in the ```with-dockerfile``` branch contains a Dockerfile which will allow this repository to be used in VS Code desktop within a container.  You will most likely be asked in you wish to reopen in a container when you clone the repository, otherwise just select the option "Remote-Containers: Reopen in Container" from the Command Palette.
 
 ## PlantUML
 
