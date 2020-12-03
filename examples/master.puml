@@ -1,0 +1,76 @@
+@startuml system-flow_enter-test-result-code
+
+Actor User
+
+group Recording
+User -> "Web App": enableRecording
+"Web App" <- "Web App": generates project name
+User -> "Web App": completeRecording
+
+"Web App" <- "Web App": generates audio and video blobs
+"Web App" -> "uploadRecording API": calls
+"uploadRecording API" -> "Original Blob Storage": uploads audio and video blobs
+"Web App" <- "Original Blob Storage": [success] confirms success
+User <- "Web App": opens edit accordion
+
+end
+
+group Editing
+User -> "Web App": edit track
+"Web App" <- "Web App": generates audio and video blobs
+
+User -> "Web App": [optional] create transcript
+"Web App" -> "createTranscript API": calls
+"createTranscript API" <- "createTranscript API": generate transcript
+"Media Blob Storage" <- "createTranscript API": [success] store file
+"Web App" <- "Media Blob Storage": [success] confirm success
+User <- "Web App": display transcript
+
+...
+
+User -> "Web App": [optional] edit transcript
+"Web App" <- "Web App": update display
+...
+
+User -> "Web App": finish editing
+"Web App" <- "Web App": generates audio and video blobs
+
+"Web App" -> "convertMedia API": calls
+"convertMedia API" <- "convertMedia API": convert blobs to single mp4
+"Edited Blob Storage" <- "convertMedia API": [success] store file
+"Web App" <- "Edited Blob Storage": [success] confirms success
+
+"Web App" -> "uploadTranscript API": [if transcript] calls
+"uploadTranscript API" -> "Transcript Blob Storage": uploads file
+"Web App" <- "Transcript Blob Storage": [success] confirms success
+User <- "Web App": opens download/upload accordion
+end
+
+group Download
+User -> "Web App": name file
+"Web App" -> "Edited Blob Storage": Request path to mp4
+"Web App" <- "Edited Blob Storage": Return path to mp4
+User <- "Web App": Download mp4
+"Web App" -> "Transcript Blob Storage": [if transcript] Request path to transcript
+"Web App" <- "Edited Blob Storage": Return path to transcript
+User <- "Web App": Download transcript
+end
+
+group Upload
+User -> "Web App": select upload
+User <- "Web App": shows YouTube login modal
+User -> "Web App": enter login details
+"Web App" -> "YouTube API": 
+end
+
+group Feedback
+User -> "Web App": attach to feedback form
+User -> "Web App": add feedback details
+"Web App" -> "sendFeedback API": calls
+
+"sendFeedback API" ->  "sendGrid API": calls
+Actor "Product Manager"
+"sendGrid API" -> "Product Manager": emails
+end
+
+@enduml

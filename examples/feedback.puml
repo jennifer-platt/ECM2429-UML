@@ -1,0 +1,14 @@
+@startuml system-flow_enter-test-result-code
+
+Actor User
+
+group Feedback
+User -> "Web App": attach to feedback form
+User -> "Web App": add feedback details
+"Web App" -> "sendFeedback API": calls
+"sendFeedback API" ->  "sendGrid API": calls
+Actor "Product Manager"
+"sendGrid API" -> "Product Manager": emails
+end
+
+@enduml

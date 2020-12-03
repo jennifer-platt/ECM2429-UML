@@ -1,0 +1,18 @@
+@startuml system-flow_enter-test-result-code
+
+Actor User
+
+group Recording
+User -> "Web App": enableRecording
+"Web App" <- "Web App": generates project name
+User -> "Web App": completeRecording
+
+"Web App" <- "Web App": generates audio and video blobs
+"Web App" -> "uploadRecording API": calls
+"uploadRecording API" -> "Original Blob Storage": uploads audio and video blobs
+"Web App" <- "Original Blob Storage": [success] confirms success
+User <- "Web App": opens edit accordion
+
+end
+
+@enduml

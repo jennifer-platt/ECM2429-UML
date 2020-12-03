@@ -1,0 +1,26 @@
+@startuml system-flow_enter-test-result-code
+
+Actor User
+
+group Download
+User -> "Web App": name file
+"Web App" -> "Edited Blob Storage": Request path to mp4
+"Web App" <- "Edited Blob Storage": [success] Return path to mp4
+User <- "Web App": Download mp4
+"Web App" -> "Transcript Blob Storage": [if transcript] Request path to transcript
+"Web App" <- "Edited Blob Storage": [success] Return path to transcript
+User <- "Web App": Download transcript
+end
+
+group Upload
+User -> "Web App": select upload
+User <- "Web App": shows YouTube login modal
+"Web App" -> "Edited Blob Storage": Request path to mp4
+"Web App" <- "Edited Blob Storage": [success] Return path to mp4
+"Web App" -> "Transcript Blob Storage": [if transcript] Request path to transcript
+"Web App" <- "Edited Blob Storage": [success] Return path to transcript
+User -> "Web App": enter login details
+"uploadToYouTube API" -> "YouTube API": 
+end
+
+@enduml
