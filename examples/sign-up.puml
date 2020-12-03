@@ -1,0 +1,17 @@
+@startuml system-flow_enter-test-result-code
+
+Actor "Product Manager"
+
+group Sign-up for Feedback
+"Product Manager" -> "Web App": enter Google login details
+"Web App" -> "Google Auth0 Server": submit login details
+"Google Auth0 Server" <- "Google Auth0 Server": authorises user
+"Web App" <- "Google Auth0 Server": [success] return access token
+"Product Manager" <- "Web App": display details modal
+"Product Manager" -> "Web App": submit company name
+"Web App" -> "Company Database": store username and company name
+"Company Database" <- "Company Database": updates table
+"Web App" <- "Company Database": [success] confirms update
+end
+
+@enduml

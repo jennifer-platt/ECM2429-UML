@@ -1,14 +1,21 @@
 @startuml system-flow_enter-test-result-code
 
-Actor User
+Actor "Tutorial Consumer"
 
 group Feedback
-User -> "Web App": attach to feedback form
-User -> "Web App": add feedback details
-"Web App" -> "sendFeedback API": calls
+"Tutorial Consumer" -> "Web App": [optional] select Send as Feedback
+"Web App" -> "Edited Blob Storage": Request path to mp4
+"Web App" <- "Edited Blob Storage": [success] Set recording path
+"Tutorial Consumer" <- "Web App": Redirect to feedback form
+"Web App" -> "Companies Database": Get company names and email addresses
+"Web App" <- "Companies Database": [success] return company names and email addresses
+"Tutorial Consumer" <- "Web App": Display companies
+"Tutorial Consumer" -> "Web App": Submit details and selected company
+"Web App" -> "sendFeedback API": formats information (and attached recording if appliable)
 "sendFeedback API" ->  "sendGrid API": calls
 Actor "Product Manager"
-"sendGrid API" -> "Product Manager": emails
+"sendGrid API" -> "Product Manager": sends email
+"sendGrid API" -> "Web App": [success] confirms success
 end
 
 @enduml

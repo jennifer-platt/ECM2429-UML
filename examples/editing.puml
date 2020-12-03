@@ -7,10 +7,10 @@ User -> "Web App": edit track
 "Web App" <- "Web App": generates audio and video blobs
 
 User -> "Web App": [optional] create transcript
-"Web App" -> "createTranscript API": calls
+"Web App" -> "createTranscript API": passes blob information
 "createTranscript API" <- "createTranscript API": generate transcript
-"Media Blob Storage" <- "createTranscript API": [success] store file
-"Web App" <- "Media Blob Storage": [success] confirm success
+"Transcript Blob Storage" <- "createTranscript API": [success] store file
+"Web App" <- "Transcript Blob Storage": [success] confirms success
 User <- "Web App": display transcript
 
 ...

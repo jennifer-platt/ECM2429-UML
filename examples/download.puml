@@ -4,23 +4,30 @@ Actor User
 
 group Download
 User -> "Web App": name file
-"Web App" -> "Edited Blob Storage": Request path to mp4
-"Web App" <- "Edited Blob Storage": [success] Return path to mp4
+"Web App" -> "Edited Blob Storage": Check path to mp4
+"Web App" <- "Edited Blob Storage": [success] Set path to mp4
 User <- "Web App": Download mp4
-"Web App" -> "Transcript Blob Storage": [if transcript] Request path to transcript
-"Web App" <- "Edited Blob Storage": [success] Return path to transcript
+"Web App" -> "Transcript Blob Storage": [if transcript] Check path to transcript
+"Web App" <- "Transcript Blob Storage": [success] Set path to transcript
 User <- "Web App": Download transcript
 end
 
 group Upload
 User -> "Web App": select upload
-User <- "Web App": shows YouTube login modal
-"Web App" -> "Edited Blob Storage": Request path to mp4
-"Web App" <- "Edited Blob Storage": [success] Return path to mp4
-"Web App" -> "Transcript Blob Storage": [if transcript] Request path to transcript
-"Web App" <- "Edited Blob Storage": [success] Return path to transcript
-User -> "Web App": enter login details
-"uploadToYouTube API" -> "YouTube API": 
+"Web App" -> "Edited Blob Storage": Check path to mp4
+"Web App" <- "Edited Blob Storage": [success] Set path to mp4
+"Web App" -> "Transcript Blob Storage": [if transcript] Check path to transcript
+"Web App" <- "Transcript Blob Storage": [success] Set path to transcript
+User <- "Web App": displays YouTube login modal
+User -> "Web App": enter Google login details
+"Web App" -> "Google Auth0 Server": submit login details
+"Google Auth0 Server" <- "Google Auth0 Server": authorises user
+"Web App" <- "Google Auth0 Server": [success] return access token
+User <- "Web App": display details modal
+User -> "Web App": submit description and timestamps/chapters
+"Web App" -> "YouTube API": post upload information
+"YouTube API" <- "YouTube API": uploads files
+"Web App" <- "YouTube API": [success] confirms upload
 end
 
 @enduml

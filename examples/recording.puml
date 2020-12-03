@@ -9,8 +9,8 @@ User -> "Web App": completeRecording
 
 "Web App" <- "Web App": generates audio and video blobs
 "Web App" -> "uploadRecording API": calls
-"uploadRecording API" -> "Original Blob Storage": uploads audio and video blobs
-"Web App" <- "Original Blob Storage": [success] confirms success
+"uploadRecording API" -> "Original Recording Blob Storage": uploads audio and video blobs
+"Web App" <- "Original Recording Blob Storage": [success] confirms success
 User <- "Web App": opens edit accordion
 
 end
