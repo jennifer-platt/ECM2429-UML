@@ -3,34 +3,35 @@
 Actor User
 
 group Editing
-User -> "Web App": edit track
-"Web App" <- "Web App": generates audio and video blobs
+User -> "Web App": edit track(s)
+"Web App" <- "Web App": generate audio and video blobs
 
-User -> "Web App": [optional] create transcript
-"Web App" -> "createTranscript API": passes blob information
+group [optional] Generate Transcript
+User -> "Web App": create transcript
+"Web App" -> "createTranscript API": call (audio blob)
 "createTranscript API" <- "createTranscript API": generate transcript
-"Transcript Blob Storage" <- "createTranscript API": [success] store file
-"Web App" <- "Transcript Blob Storage": [success] confirms success
+"Transcript Blob Storage" <- "createTranscript API": [success] store (transcript)
+"Web App" <- "Transcript Blob Storage": [success] response 200 OK
 User <- "Web App": display transcript
+end
 
-...
-
-User -> "Web App": [optional] edit transcript
+group [optional] Edit Transcript
+User -> "Web App": edit transcript
 "Web App" <- "Web App": update display
-...
+end
 
 User -> "Web App": finish editing
-"Web App" <- "Web App": generates audio and video blobs
+"Web App" <- "Web App": generate audio and video blobs
 
-"Web App" -> "convertMedia API": calls
+"Web App" -> "convertMedia API": call (audio blob, video blob)
 "convertMedia API" <- "convertMedia API": convert blobs to single mp4
 "Edited Blob Storage" <- "convertMedia API": [success] store file
-"Web App" <- "Edited Blob Storage": [success] confirms success
+"Web App" <- "Edited Blob Storage": [success] response 200 OK
 
-"Web App" -> "uploadTranscript API": [if transcript] calls
-"uploadTranscript API" -> "Transcript Blob Storage": uploads file
-"Web App" <- "Transcript Blob Storage": [success] confirms success
-User <- "Web App": opens download/upload accordion
+"Web App" -> "uploadTranscript API": [if transcript] call (transcript)
+"uploadTranscript API" -> "Transcript Blob Storage": upload (transcript)
+"Web App" <- "Transcript Blob Storage": [success] response 200 OK
+User <- "Web App": open download/upload accordion
 end
 
 @enduml

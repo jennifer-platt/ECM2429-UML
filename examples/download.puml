@@ -25,9 +25,9 @@ User -> "Web App": enter Google login details
 "Web App" <- "Google Auth0 Server": [success] return access token
 User <- "Web App": display details modal
 User -> "Web App": submit description and timestamps/chapters
-"Web App" -> "YouTube API": post upload information
-"YouTube API" <- "YouTube API": uploads files
-"Web App" <- "YouTube API": [success] confirms upload
+"Web App" -> "YouTube API": post upload request
+"YouTube API" <- "YouTube API": upload files
+"Web App" <- "YouTube API": [success] response 200 OK
 end
 
 @enduml

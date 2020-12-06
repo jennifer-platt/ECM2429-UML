@@ -3,15 +3,15 @@
 Actor User
 
 group Recording
-User -> "Web App": enableRecording
-"Web App" <- "Web App": generates project name
-User -> "Web App": completeRecording
+User -> "Web App": enable recording
+"Web App" <- "Web App": generate project name
+User -> "Web App": complete recording
 
 "Web App" <- "Web App": generates audio and video blobs
-"Web App" -> "uploadRecording API": calls
-"uploadRecording API" -> "Original Recording Blob Storage": uploads audio and video blobs
-"Web App" <- "Original Recording Blob Storage": [success] confirms success
-User <- "Web App": opens edit accordion
+"Web App" -> "uploadRecording API": call (audio blob, video blob)
+"uploadRecording API" -> "Original Recording Blob Storage": upload audio and video blobs
+"Web App" <- "Original Recording Blob Storage": [success] response 200 OK
+User <- "Web App": [if on main page] open edit accordion
 
 end
 
