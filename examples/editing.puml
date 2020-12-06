@@ -1,4 +1,4 @@
-@startuml system-flow_enter-test-result-code
+@startuml editing
 
 Actor User
 
