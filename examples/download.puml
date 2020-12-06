@@ -1,32 +1,34 @@
-@startuml system-flow_enter-test-result-code
+@startuml download
 
-Actor User
+Actor Developer
+
+Developer -> "Web App": name recording
 
 group Download
-User -> "Web App": name file
-"Web App" -> "Edited Blob Storage": Check path to mp4
-"Web App" <- "Edited Blob Storage": [success] Set path to mp4
-User <- "Web App": Download mp4
-"Web App" -> "Transcript Blob Storage": [if transcript] Check path to transcript
-"Web App" <- "Transcript Blob Storage": [success] Set path to transcript
-User <- "Web App": Download transcript
+Developer -> "Web App": select download
+"Web App" -> "Edited Blob Storage": check mp4 path exists
+"Web App" <- "Edited Blob Storage": [success] response 200 OK
+Developer <- "Web App": download mp4
+"Web App" -> "Transcript Blob Storage": [if transcript] check transcript path exists
+"Web App" <- "Transcript Blob Storage": [success] response 200 OK
+Developer <- "Web App": download transcript
 end
 
 group Upload
-User -> "Web App": select upload
-"Web App" -> "Edited Blob Storage": Check path to mp4
-"Web App" <- "Edited Blob Storage": [success] Set path to mp4
-"Web App" -> "Transcript Blob Storage": [if transcript] Check path to transcript
-"Web App" <- "Transcript Blob Storage": [success] Set path to transcript
-User <- "Web App": displays YouTube login modal
-User -> "Web App": enter Google login details
-"Web App" -> "Google Auth0 Server": submit login details
-"Google Auth0 Server" <- "Google Auth0 Server": authorises user
+Developer -> "Web App": select upload
+"Web App" -> "Edited Blob Storage": check mp4 path exists
+"Web App" <- "Edited Blob Storage": [success] response 200 OK
+"Web App" -> "Transcript Blob Storage": [if transcript] check transcript path exists
+"Web App" <- "Transcript Blob Storage": [success] response 200 OK
+Developer <- "Web App": display login modal
+Developer -> "Web App": enter YouTube login details
+"Web App" -> "Google Auth0 Server": call (username, password)
+"Google Auth0 Server" <- "Google Auth0 Server": authorise user
 "Web App" <- "Google Auth0 Server": [success] return access token
-User <- "Web App": display details modal
-User -> "Web App": submit description and timestamps/chapters
-"Web App" -> "YouTube API": post upload request
-"YouTube API" <- "YouTube API": upload files
+Developer <- "Web App": display details modal
+Developer -> "Web App": submit description [optional: timestamps/chapters]
+"Web App" -> "YouTube API": call (access token, mp4, transcript, description, timestamp)
+"YouTube API" <- "YouTube API": upload
 "Web App" <- "YouTube API": [success] response 200 OK
 end
 
