@@ -7,7 +7,7 @@ User -> "Web App": edit track(s)
 "Web App" <- "Web App": generate audio and video blobs
 
 group [optional] Generate Transcript
-User -> "Web App": create transcript
+User -> "Web App": select create transcript
 "Web App" -> "createTranscript API": call (audio blob)
 "createTranscript API" <- "createTranscript API": generate transcript
 "Transcript Blob Storage" <- "createTranscript API": [success] store (transcript)
@@ -25,7 +25,7 @@ User -> "Web App": finish editing
 
 "Web App" -> "convertMedia API": call (audio blob, video blob)
 "convertMedia API" <- "convertMedia API": convert blobs to single mp4
-"Edited Blob Storage" <- "convertMedia API": [success] store file
+"Edited Blob Storage" <- "convertMedia API": [success] store (mp4)
 "Web App" <- "Edited Blob Storage": [success] response 200 OK
 
 "Web App" -> "uploadTranscript API": [if transcript] call (transcript)
