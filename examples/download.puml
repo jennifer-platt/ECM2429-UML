@@ -21,7 +21,7 @@ Developer -> "Web App": select upload
 "Web App" -> "Transcript Blob Storage": [if transcript] check transcript path exists
 "Web App" <- "Transcript Blob Storage": [success] response 200 OK
 Developer <- "Web App": display login modal
-Developer -> "Web App": enter YouTube login details
+Developer -> "Web App": enter Google login details
 "Web App" -> "Google Auth0 Server": call (username, password)
 "Google Auth0 Server" <- "Google Auth0 Server": authorise user
 "Web App" <- "Google Auth0 Server": [success] return access token
