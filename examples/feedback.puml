@@ -11,7 +11,7 @@ group Feedback
 "Web App" <- "Companies Database": [success] return company names and email addresses
 "Tutorial Consumer" <- "Web App": Display companies
 "Tutorial Consumer" -> "Web App": Submit details and selected company
-"Web App" -> "sendFeedback API": formats information (and attached recording if appliable)
+"Web App" -> "sendFeedback API": formats information (and attached recording if applicable)
 "sendFeedback API" ->  "sendGrid API": calls
 Actor "Product Manager"
 "sendGrid API" -> "Product Manager": sends email
