@@ -1,10 +1,10 @@
-@startuml system-flow_enter-test-result-code
+@startuml feedback
 
 Actor "Tutorial Consumer"
 
 group Feedback
-"Web App" -> "Companies Database": select (company names, email addresses)
-"Web App" <- "Companies Database": [success] return (company names, email addresses)
+"Web App" -> "Companies Database": select (company names, \nemail addresses)
+"Web App" <- "Companies Database": [success] return (company names, \nemail addresses)
 "Tutorial Consumer" <- "Web App": display company names
 
 group [optional] Make Recording
@@ -20,9 +20,9 @@ group [optional] Make Recording
 "Tutorial Consumer" <- "Web App": display recording
 end
 
-"Tutorial Consumer" -> "Web App": select company and submit feedback
-"Web App" -> "sendFeedback API": call (feedback, company name, email address, ?recording link)
-"sendFeedback API" ->  "sendGrid API": call (recap API key, feedback, company name, email address, ?recording link)
+"Tutorial Consumer" -> "Web App": select company \nand submit feedback
+"Web App" -> "sendFeedback API": call (feedback, company name, \nemail address, ?recording link)
+"sendFeedback API" ->  "sendGrid API": call (recap API key, feedback, \ncompany name, email address, \n?recording link)
 Actor "Product Manager"
 "sendGrid API" -> "Product Manager": send email
 "sendGrid API" -> "Web App": [success] message OK
