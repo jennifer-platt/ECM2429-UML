@@ -3,19 +3,29 @@
 Actor "Tutorial Consumer"
 
 group Feedback
-"Tutorial Consumer" -> "Web App": [optional] select Send as Feedback
-"Web App" -> "Edited Blob Storage": Request path to mp4
-"Web App" <- "Edited Blob Storage": [success] Set recording path
-"Tutorial Consumer" <- "Web App": Redirect to feedback form
-"Web App" -> "Companies Database": Get company names and email addresses
-"Web App" <- "Companies Database": [success] return company names and email addresses
-"Tutorial Consumer" <- "Web App": Display companies
-"Tutorial Consumer" -> "Web App": Submit details and selected company
-"Web App" -> "sendFeedback API": formats information (and attached recording if applicable)
-"sendFeedback API" ->  "sendGrid API": calls
+"Web App" -> "Companies Database": select (company names, email addresses)
+"Web App" <- "Companies Database": [success] return (company names, email addresses)
+"Tutorial Consumer" <- "Web App": display company names
+
+group [optional] Make Recording
+"Tutorial Consumer" -> "Web App": enable recording
+"Web App" <- "Web App": generate project name
+"Tutorial Consumer" -> "Web App": complete recording
+
+"Web App" <- "Web App": generate audio and video blobs
+"Web App" -> "uploadRecording API": call (audio blob, video blob)
+"uploadRecording API" -> "Original Recording Blob Storage": upload audio and video blobs
+"Web App" <- "Original Recording Blob Storage": [success] response 200 OK
+"Web App" <- "Web App": set recording link
+"Tutorial Consumer" <- "Web App": display recording
+end
+
+"Tutorial Consumer" -> "Web App": select company and submit feedback
+"Web App" -> "sendFeedback API": call (feedback, company name, email address, ?recording link)
+"sendFeedback API" ->  "sendGrid API": call (recap API key, feedback, company name, email address, ?recording link)
 Actor "Product Manager"
-"sendGrid API" -> "Product Manager": sends email
-"sendGrid API" -> "Web App": [success] confirms success
+"sendGrid API" -> "Product Manager": send email
+"sendGrid API" -> "Web App": [success] message OK
 end
 
 @enduml
