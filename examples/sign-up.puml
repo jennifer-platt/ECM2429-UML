@@ -2,7 +2,7 @@
 
 Actor "Product Manager"
 
-group Sign-up for Feedback
+group Feedback Sign-up
 "Product Manager" -> "Web App": enter Google login details
 "Web App" -> "Google Auth0 Server": call (username, password)
 "Google Auth0 Server" <- "Google Auth0 Server": authorise user
