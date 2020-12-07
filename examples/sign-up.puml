@@ -9,9 +9,9 @@ group Sign-up for Feedback
 "Web App" <- "Google Auth0 Server": [success] return access token
 "Product Manager" <- "Web App": display modal
 "Product Manager" -> "Web App": submit company name
-"Web App" -> "Company Database": insert (username, company name)
-"Company Database" <- "Company Database": update
-"Web App" <- "Company Database": [success] message OK
+"Web App" -> "Companies Database": insert (username, company name)
+"Companies Database" <- "Companies Database": update table
+"Web App" <- "Companies Database": [success] message OK
 end
 
 @enduml
