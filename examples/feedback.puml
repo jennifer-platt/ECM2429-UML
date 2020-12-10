@@ -14,19 +14,19 @@ group [optional] Make Recording
 
 "Web App" <- "Web App": generate audio and video blobs
 
-"Web App" -> "convertMedia API": call (audio blob, video blob)
-"convertMedia API" <- "convertMedia API": convert blobs to single mp4
-"Edited Blob Storage" <- "convertMedia API": [success] store (mp4)
+"Web App" -> "convertMedia Func.": call (audio blob, video blob)
+"convertMedia Func." <- "convertMedia Func.": convert blobs to single mp4
+"Edited Blob Storage" <- "convertMedia Func.": [success] store (mp4)
 "Web App" <- "Edited Blob Storage": [success] response 200 OK
 "Web App" <- "Web App": Set recording path
 end
 
 "Tutorial Consumer" -> "Web App": select company \nand submit feedback
-"Web App" -> "sendFeedback API": call (feedback, company name, \nemail address, ?recording path)
-"sendFeedback API" ->  "sendGrid API": call (Recap API key, feedback, \ncompany name, email address, \n?recording path)
+"Web App" -> "sendFeedback Func.": call (feedback, company name, \nemail address, ?recording path)
+"sendFeedback Func." ->  "sendGrid Func.": call (Recap API key, feedback, \ncompany name, email address, \n?recording path)
 Actor "Product Manager"
-"sendGrid API" -> "Product Manager": send email
-"sendGrid API" -> "Web App": [success] message OK
+"sendGrid Func." -> "Product Manager": send email
+"sendGrid Func." -> "Web App": [success] message OK
 end
 
 @enduml

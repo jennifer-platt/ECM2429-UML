@@ -4,9 +4,9 @@ Actor Developer
 
 group [optional] Upload Existing Tutorial
 Developer -> "Web App": submit mp4
-"Web App" -> "convertMedia API": call (mp4)
-"convertMedia API" <- "convertMedia API": convert mp4 to audio and video blobs
-"Edited Blob Storage" <- "convertMedia API": [success] store (audio blob, video blob)
+"Web App" -> "convertMedia Func.": call (mp4)
+"convertMedia Func." <- "convertMedia Func.": convert mp4 to audio and video blobs
+"Edited Blob Storage" <- "convertMedia Func.": [success] store (audio blob, video blob)
 "Web App" <- "Edited Blob Storage": [success] response 200 OK
 end
 
@@ -16,9 +16,9 @@ Developer -> "Web App": edit track(s)
 
 group [optional] Generate Transcript
 Developer -> "Web App": select create transcript
-"Web App" -> "createTranscript API": call (audio blob)
-"createTranscript API" <- "createTranscript API": generate transcript
-"Transcript Blob Storage" <- "createTranscript API": [success] store (transcript)
+"Web App" -> "createTranscript Func.": call (audio blob)
+"createTranscript Func." <- "createTranscript Func.": generate transcript
+"Transcript Blob Storage" <- "createTranscript Func.": [success] store (transcript)
 "Web App" <- "Transcript Blob Storage": [success] response 200 OK
 Developer <- "Web App": display transcript
 end
@@ -31,13 +31,13 @@ end
 Developer -> "Web App": finish editing
 "Web App" <- "Web App": generate audio and video blobs
 
-"Web App" -> "convertMedia API": call (audio blob, video blob)
-"convertMedia API" <- "convertMedia API": convert blobs to single mp4
-"Edited Blob Storage" <- "convertMedia API": [success] store (mp4)
+"Web App" -> "convertMedia Func.": call (audio blob, video blob)
+"convertMedia Func." <- "convertMedia Func.": convert blobs to single mp4
+"Edited Blob Storage" <- "convertMedia Func.": [success] store (mp4)
 "Web App" <- "Edited Blob Storage": [success] response 200 OK
 
-"Web App" -> "uploadTranscript API": [if transcript] call (transcript)
-"uploadTranscript API" -> "Transcript Blob Storage": upload (transcript)
+"Web App" -> "uploadTranscript Func.": [if transcript] call (transcript)
+"uploadTranscript Func." -> "Transcript Blob Storage": upload (transcript)
 "Web App" <- "Transcript Blob Storage": [success] response 200 OK
 Developer <- "Web App": open download/upload accordion
 end
