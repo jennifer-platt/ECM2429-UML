@@ -13,16 +13,17 @@ group [optional] Make Recording
 "Tutorial Consumer" -> "Web App": complete recording
 
 "Web App" <- "Web App": generate audio and video blobs
-"Web App" -> "uploadRecording API": call (audio blob, video blob)
-"uploadRecording API" -> "Original Recording Blob Storage": upload audio and video blobs
-"Web App" <- "Original Recording Blob Storage": [success] response 200 OK
-"Web App" <- "Web App": set recording link
-"Tutorial Consumer" <- "Web App": display recording
+
+"Web App" -> "convertMedia API": call (audio blob, video blob)
+"convertMedia API" <- "convertMedia API": convert blobs to single mp4
+"Edited Blob Storage" <- "convertMedia API": [success] store (mp4)
+"Web App" <- "Edited Blob Storage": [success] response 200 OK
+"Web App" <- "Web App": Set recording path
 end
 
 "Tutorial Consumer" -> "Web App": select company \nand submit feedback
-"Web App" -> "sendFeedback API": call (feedback, company name, \nemail address, ?recording link)
-"sendFeedback API" ->  "sendGrid API": call (recap API key, feedback, \ncompany name, email address, \n?recording link)
+"Web App" -> "sendFeedback API": call (feedback, company name, \nemail address, ?recording path)
+"sendFeedback API" ->  "sendGrid API": call (Recap API key, feedback, \ncompany name, email address, \n?recording path)
 Actor "Product Manager"
 "sendGrid API" -> "Product Manager": send email
 "sendGrid API" -> "Web App": [success] message OK

@@ -2,6 +2,14 @@
 
 Actor Developer
 
+group [optional] Upload Existing Tutorial
+Developer -> "Web App": submit mp4
+"Web App" -> "convertMedia API": call (mp4)
+"convertMedia API" <- "convertMedia API": convert mp4 to audio and video blobs
+"Edited Blob Storage" <- "convertMedia API": [success] store (audio blob, video blob)
+"Web App" <- "Edited Blob Storage": [success] response 200 OK
+end
+
 group Editing
 Developer -> "Web App": edit track(s)
 "Web App" <- "Web App": generate audio and video blobs

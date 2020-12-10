@@ -3,13 +3,8 @@
 Actor "Product Manager"
 
 group Feedback Sign-up
-"Product Manager" -> "Web App": enter Google login details
-"Web App" -> "Google Auth0 Server": call (username, password)
-"Google Auth0 Server" <- "Google Auth0 Server": authorise user
-"Web App" <- "Google Auth0 Server": [success] return access token
-"Product Manager" <- "Web App": display modal
-"Product Manager" -> "Web App": submit company name
-"Web App" -> "Companies Database": insert (username, company name)
+"Product Manager" -> "Web App": submit email and company name
+"Web App" -> "Companies Database": insert (email, company name)
 "Companies Database" <- "Companies Database": update table
 "Web App" <- "Companies Database": [success] message OK
 end
