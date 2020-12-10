@@ -8,9 +8,11 @@ group Download
 Developer -> "Web App": select download
 "Web App" -> "Edited Blob Storage": check mp4 path exists
 "Web App" <- "Edited Blob Storage": [success] response 200 OK
+"Web App" <- "Web App": set mp4 path
 Developer <- "Web App": download mp4
 "Web App" -> "Transcript Blob Storage": [if transcript] check transcript path exists
 "Web App" <- "Transcript Blob Storage": [success] response 200 OK
+"Web App" <- "Web App": set transcript path
 Developer <- "Web App": download transcript
 end
 
@@ -18,16 +20,18 @@ group Upload
 Developer -> "Web App": select upload
 "Web App" -> "Edited Blob Storage": check mp4 path exists
 "Web App" <- "Edited Blob Storage": [success] response 200 OK
+"Web App" <- "Web App": set mp4 path
 "Web App" -> "Transcript Blob Storage": [if transcript] check transcript path exists
 "Web App" <- "Transcript Blob Storage": [success] response 200 OK
+"Web App" <- "Web App": set transcript path
 Developer <- "Web App": display login modal
 Developer -> "Web App": enter Google login details
 "Web App" -> "Google Auth0 Server": call (username, password)
 "Google Auth0 Server" <- "Google Auth0 Server": authorise user
 "Web App" <- "Google Auth0 Server": [success] return access token
-Developer <- "Web App": display details modal
+Developer <- "Web App": display description modal
 Developer -> "Web App": submit description [optional: timestamps/chapters]
-"Web App" -> "YouTube API": call (access token, mp4, ?transcript, description, ?timestamp)
+"Web App" -> "YouTube API": call (access token, mp4 path, ?transcript path, description, ?timestamp)
 "YouTube API" <- "YouTube API": upload
 "Web App" <- "YouTube API": [success] response 200 OK
 end
